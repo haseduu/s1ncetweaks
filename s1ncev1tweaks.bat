@@ -42,7 +42,7 @@ set "s1nce=%temp%\S1nceTweaks"
 :MainMenu
 cls
 echo ╔════════════════════════════════════════════════╗
-echo ║              S1NCE TWEAKS v%Version%           ║
+echo ║              S1NCE TWEAKS v%Version%                 ║
 echo ╠════════════════════════════════════════════════╣
 echo ║                                                ║
 echo ║  [1] Download Required Tools                   ║
@@ -81,13 +81,13 @@ echo Downloading required files...
 echo.
 
 echo [1/3] DevManView.exe (for device management)
-curl -L --silent -o "%s1nce%\DevManView.exe" ""
+curl -L --silent -o "%s1nce%\DevManView.exe" "https://github.com/haseduu/s1ncetweaks/blob/main/resources/DevManView.exe"
 echo [2/3] OOSU10.exe (for privacy settings)
 curl -L --silent -o "%s1nce%\OOSU10.exe" "https://dl5.oo-software.com/files/ooshutup10/OOSU10.exe"
 echo [3/3] ooshutup10.cfg (configuration file)
-curl -L --silent -o "%s1nce%\ooshutup10.cfg" ""
+curl -L --silent -o "%s1nce%\ooshutup10.cfg" "https://github.com/haseduu/s1ncetweaks/blob/main/resources/ooshutup10.cfg"
 echo [3/3] Khorvie.pow (powerplan for max performance)
-curl -L --silent -o "%s1nce%\Khorvie.pow" ""
+curl -L --silent -o "%s1nce%\Khorvie.pow" "https://github.com/haseduu/s1ncetweaks/blob/main/resources/Khorvie.pow"
 echo.
 echo Download completed successfully!
 echo.
@@ -762,7 +762,7 @@ echo.
 echo [1] Disable Telemetry and Data Collection
 echo [2] Disable Windows Error Reporting
 echo [3] Disable Windows Defender (Not Recommended)
-echo [4] Run O&O ShutUp10 (Advanced Privacy Settings)
+echo [4] Run OO ShutUp10 (Advanced Privacy Settings)
 echo [5] All Privacy Tweaks
 echo [6] Back to Main Menu
 echo.
@@ -940,16 +940,16 @@ goto PrivacyTweaks
 :OOSU10
 cls
 echo ╔════════════════════════════════════════════════╗
-echo ║               O&O SHUTUP10                     ║
+echo ║               OO SHUTUP10                      ║
 echo ╚════════════════════════════════════════════════╝
 echo.
-echo Running O&O ShutUp10 with recommended settings...
-echo [O&O ShutUp10] >> S1nce.log
+echo Running OO ShutUp10 with recommended settings...
+echo [OO ShutUp10] >> S1nce.log
 
 start "" /wait "%s1nce%\OOSU10.exe" "%s1nce%\ooshutup10.cfg" /quiet
 
 echo.
-echo O&O ShutUp10 privacy settings have been applied.
+echo OO ShutUp10 privacy settings have been applied.
 echo.
 echo Press any key to return to Privacy Tweaks menu...
 pause >nul
@@ -1001,7 +1001,7 @@ sc config dmwappushservice start= disabled >> S1nce.log
 sc stop dmwappushservice >> S1nce.log
 
 :: Run O&O ShutUp10
-echo Running O&O ShutUp10...
+echo Running OO ShutUp10...
 start "" /wait "%s1nce%\OOSU10.exe" "%s1nce%\ooshutup10.cfg" /quiet
 
 echo.
@@ -1135,7 +1135,7 @@ echo.
 echo [1] Disable Telemetry and Data Collection
 echo [2] Disable Windows Error Reporting
 echo [3] Disable Windows Defender (Not Recommended)
-echo [4] Run O&O ShutUp10 (Advanced Privacy Settings)
+echo [4] Run OO ShutUp10 (Advanced Privacy Settings)
 echo [5] All Privacy Tweaks
 echo [6] Back to Main Menu
 echo.
@@ -1313,16 +1313,16 @@ goto PrivacyTweaks
 :OOSU10
 cls
 echo ╔════════════════════════════════════════════════╗
-echo ║               O&O SHUTUP10                     ║
+echo ║               OO SHUTUP10                      ║
 echo ╚════════════════════════════════════════════════╝
 echo.
-echo Running O&O ShutUp10 with recommended settings...
-echo [O&O ShutUp10] >> S1nce.log
+echo Running OO ShutUp10 with recommended settings...
+echo [OO ShutUp10] >> S1nce.log
 
 start "" /wait "%s1nce%\OOSU10.exe" "%s1nce%\ooshutup10.cfg" /quiet
 
 echo.
-echo O&O ShutUp10 privacy settings have been applied.
+echo OO ShutUp10 privacy settings have been applied.
 echo.
 echo Press any key to return to Privacy Tweaks menu...
 pause >nul
@@ -1374,7 +1374,7 @@ sc config dmwappushservice start= disabled >> S1nce.log
 sc stop dmwappushservice >> S1nce.log
 
 :: Run O&O ShutUp10
-echo Running O&O ShutUp10...
+echo Running OO ShutUp10...
 start "" /wait "%s1nce%\OOSU10.exe" "%s1nce%\ooshutup10.cfg" /quiet
 
 echo.
