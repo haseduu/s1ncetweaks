@@ -139,7 +139,7 @@ echo.
 echo [1] Memory Management Optimization
 echo [2] Service Host Optimization
 echo [3] Process Mitigations (Performance Boost)
-echo [4] Power Plan Optimization
+echo [4] Power Tweaks
 echo [5] Disable Unnecessary Services
 echo [6] Boot Configuration
 echo [7] GPU Optimization
