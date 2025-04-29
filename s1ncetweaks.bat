@@ -55,7 +55,7 @@ echo ║  [0] Exit                                      ║
 echo ║                                                ║
 echo ╚════════════════════════════════════════════════╝
 echo.
-set /p choice=Enter your choice (0-9): 
+set /p choice=Enter your choice (0-6): 
 if "%choice%"=="1" goto DownloadTools
 if "%choice%"=="2" goto CreateRestorePoint
 if "%choice%"=="3" goto PerformanceTweaks
