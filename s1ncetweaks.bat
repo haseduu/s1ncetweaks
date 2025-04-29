@@ -1,4 +1,4 @@
-﻿@echo off
+@echo off
 color 0A
 chcp 65001 >nul
 
