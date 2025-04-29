@@ -3,16 +3,16 @@ color 0A
 chcp 65001 >nul
 
 ::Title and Version
-title S1nce Tweaks
+title s1nce Tweaks
 set Version=1.1
 
 ::Enable Delayed Expansion
 SetLocal EnableDelayedExpansion
 
 ::Set Logfile with timestamp
-echo S1nce Tweaks v1.1 Log > S1nce.log
-echo Started: %date% %time% >> S1nce.log
-echo. >> S1nce.log
+echo s1nce Tweaks v1.1 Log > s1ncetweaks.log
+echo Started: %date% %time% >> s1ncetweaks.log
+echo. >> s1ncetweaks.log
 
 ::Check For Admin Rights
 net session >nul 2>&1
@@ -34,8 +34,8 @@ if errorlevel 1 (
 )
 
 ::Make Directory In Temp
-mkdir "%temp%\S1nceTweaks" 2>nul
-set "s1nce=%temp%\S1nceTweaks"
+mkdir "%temp%\s1nceTweaks" 2>nul
+set "s1nce=%temp%\s1nceTweaks"
 
 
 
@@ -105,8 +105,8 @@ echo [INFO] Creating a restore point is HIGHLY RECOMMENDED
 echo       before making system changes.
 echo.
 echo Creating system restore point...
-reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SystemRestore" /v "SystemRestorePointCreationFrequency" /t REG_DWORD /d "0" /f >> S1nce.log
-powershell -ExecutionPolicy Bypass -Command "Checkpoint-Computer -Description 'S1nce Tweaks' -RestorePointType 'MODIFY_SETTINGS'"
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SystemRestore" /v "SystemRestorePointCreationFrequency" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+powershell -ExecutionPolicy Bypass -Command "Checkpoint-Computer -Description 's1nce Tweaks' -RestorePointType 'MODIFY_SETTINGS'"
 
 if %errorlevel% equ 0 (
     echo.
@@ -117,7 +117,7 @@ if %errorlevel% equ 0 (
     echo [INFO] Attempting to enable System Protection...
     powershell -ExecutionPolicy Bypass -Command "Enable-ComputerRestore -Drive 'C:\'"
     echo [INFO] Trying to create restore point again...
-    powershell -ExecutionPolicy Bypass -Command "Checkpoint-Computer -Description 'S1nce Tweaks' -RestorePointType 'MODIFY_SETTINGS'"
+    powershell -ExecutionPolicy Bypass -Command "Checkpoint-Computer -Description 's1nce Tweaks' -RestorePointType 'MODIFY_SETTINGS'"
     
     if %errorlevel% equ 0 (
         echo [SUCCESS] System restore point created successfully!
@@ -168,25 +168,25 @@ echo ║          MEMORY MANAGEMENT TWEAKS              ║
 echo ╚════════════════════════════════════════════════╝
 echo.
 echo Applying Memory Management Tweaks...
-echo [Memory Management] >> S1nce.log
+echo [Memory Management] >> s1ncetweaks.log
 
 :: Memory Management Tweaks
 echo Setting Control Flow Guard to improve performance...
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "EnableCfg" /t REG_DWORD /d "0" /f >> S1nce.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "EnableCfg" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
 echo Setting Exploit Protection settings...
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "FeatureSettings" /t REG_DWORD /d "1" /f >> S1nce.log
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "FeatureSettingsOverride" /t REG_DWORD /d "3" /f >> S1nce.log
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "FeatureSettingsOverrideMask" /t REG_DWORD /d "3" /f >> S1nce.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "FeatureSettings" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "FeatureSettingsOverride" /t REG_DWORD /d "3" /f >> s1ncetweaks.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "FeatureSettingsOverrideMask" /t REG_DWORD /d "3" /f >> s1ncetweaks.log
 
 :: Prefetch and Superfetch settings
 echo Optimizing Prefetch and Superfetch...
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters" /v "EnablePrefetcher" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters" /v "EnableSuperfetch" /t REG_DWORD /d "0" /f >> S1nce.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters" /v "EnablePrefetcher" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters" /v "EnableSuperfetch" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
 
 :: Process Working Set
 echo Optimizing Process Working Set...
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "ClearPageFileAtShutdown" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "LargeSystemCache" /t REG_DWORD /d "0" /f >> S1nce.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "ClearPageFileAtShutdown" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "LargeSystemCache" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
 
 echo.
 echo Memory Management optimizations applied successfully.
@@ -216,23 +216,23 @@ echo.
 set /p ram=Enter your choice (1-7): 
 
 if "%ram%"=="1" (
-    reg add "HKLM\SYSTEM\CurrentControlSet\Control" /v "SvcHostSplitThresholdInKB" /t REG_DWORD /d "4194304" /f >> S1nce.log
+    reg add "HKLM\SYSTEM\CurrentControlSet\Control" /v "SvcHostSplitThresholdInKB" /t REG_DWORD /d "4194304" /f >> s1ncetweaks.log
     echo Service Host Threshold set for 4 GB RAM.
 )
 if "%ram%"=="2" (
-    reg add "HKLM\SYSTEM\CurrentControlSet\Control" /v "SvcHostSplitThresholdInKB" /t REG_DWORD /d "8388608" /f >> S1nce.log
+    reg add "HKLM\SYSTEM\CurrentControlSet\Control" /v "SvcHostSplitThresholdInKB" /t REG_DWORD /d "8388608" /f >> s1ncetweaks.log
     echo Service Host Threshold set for 8 GB RAM.
 )
 if "%ram%"=="3" (
-    reg add "HKLM\SYSTEM\CurrentControlSet\Control" /v "SvcHostSplitThresholdInKB" /t REG_DWORD /d "16777216" /f >> S1nce.log
+    reg add "HKLM\SYSTEM\CurrentControlSet\Control" /v "SvcHostSplitThresholdInKB" /t REG_DWORD /d "16777216" /f >> s1ncetweaks.log
     echo Service Host Threshold set for 16 GB RAM.
 )
 if "%ram%"=="4" (
-    reg add "HKLM\SYSTEM\CurrentControlSet\Control" /v "SvcHostSplitThresholdInKB" /t REG_DWORD /d "33554432" /f >> S1nce.log
+    reg add "HKLM\SYSTEM\CurrentControlSet\Control" /v "SvcHostSplitThresholdInKB" /t REG_DWORD /d "33554432" /f >> s1ncetweaks.log
     echo Service Host Threshold set for 32 GB RAM.
 )
 if "%ram%"=="5" (
-    reg add "HKLM\SYSTEM\CurrentControlSet\Control" /v "SvcHostSplitThresholdInKB" /t REG_DWORD /d "67108864" /f >> S1nce.log
+    reg add "HKLM\SYSTEM\CurrentControlSet\Control" /v "SvcHostSplitThresholdInKB" /t REG_DWORD /d "67108864" /f >> s1ncetweaks.log
     echo Service Host Threshold set for 64 GB RAM.
 )
 
@@ -264,23 +264,23 @@ set /p mitigation=Enter your choice (1-3):
 
 if "%mitigation%"=="1" (
     echo Applying Standard Process Mitigation Tweaks...
-    echo [Process Mitigations - Standard] >> S1nce.log
+    echo [Process Mitigations - Standard] >> s1ncetweaks.log
 
     :: Disable some mitigations but keep essential security
-    powershell -Command "Set-ProcessMitigation -System -Disable CFG, ForceRelocateImages, RequireInfo, BottomUp, HighEntropy" >> S1nce.log
-    reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\kernel" /v "MitigationOptions" /t REG_BINARY /d "222222222222222222222222222222222222222222222222222222222222222" /f >> S1nce.log
+    powershell -Command "Set-ProcessMitigation -System -Disable CFG, ForceRelocateImages, RequireInfo, BottomUp, HighEntropy" >> s1ncetweaks.log
+    reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\kernel" /v "MitigationOptions" /t REG_BINARY /d "222222222222222222222222222222222222222222222222222222222222222" /f >> s1ncetweaks.log
     
     echo Standard mitigations applied.
 )
 
 if "%mitigation%"=="2" (
     echo Applying Aggressive Process Mitigation Tweaks...
-    echo [Process Mitigations - Aggressive] >> S1nce.log
+    echo [Process Mitigations - Aggressive] >> s1ncetweaks.log
 
     :: Remove all mitigations (maximum performance, lower security)
-    powershell -Command "Remove-Item -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\*' -Recurse -ErrorAction SilentlyContinue" >> S1nce.log
-    powershell -Command "ForEach($v in (Get-Command -Name 'Set-ProcessMitigation').Parameters['Disable'].Attributes.ValidValues){Set-ProcessMitigation -System -Disable $v.ToString() -ErrorAction SilentlyContinue}" >> S1nce.log
-    reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\kernel" /v "MitigationOptions" /t REG_BINARY /d "222222222222222222222222222222222222222222222222222222222222222" /f >> S1nce.log
+    powershell -Command "Remove-Item -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\*' -Recurse -ErrorAction SilentlyContinue" >> s1ncetweaks.log
+    powershell -Command "ForEach($v in (Get-Command -Name 'Set-ProcessMitigation').Parameters['Disable'].Attributes.ValidValues){Set-ProcessMitigation -System -Disable $v.ToString() -ErrorAction SilentlyContinue}" >> s1ncetweaks.log
+    reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\kernel" /v "MitigationOptions" /t REG_BINARY /d "222222222222222222222222222222222222222222222222222222222222222" /f >> s1ncetweaks.log
     
     echo Aggressive mitigations applied.
 )
@@ -303,23 +303,23 @@ echo ║            POWER PLAN OPTIMIZATION             ║
 echo ╚════════════════════════════════════════════════╝
 echo.
 echo Applying Power Optimization Tweaks...
-echo [Power Tweaks] >> S1nce.log
+echo [Power Tweaks] >> s1ncetweaks.log
 
 :: Import optimized power plan
-powercfg -import "%s1nce%\Khorvie.pow" 7f5875ed-2f22-4ba1-b357-3188ac5702a9 >> S1nce.log
-powercfg -setactive 7f5875ed-2f22-4ba1-b357-3188ac5702a9 >> S1nce.log
+powercfg -import "%s1nce%\Khorvie.pow" 7f5875ed-2f22-4ba1-b357-3188ac5702a9 >> s1ncetweaks.log
+powercfg -setactive 7f5875ed-2f22-4ba1-b357-3188ac5702a9 >> s1ncetweaks.log
 
 :: Disable hibernation to free up disk space
 echo Disabling hibernation...
-powercfg -h off >> S1nce.log
+powercfg -h off >> s1ncetweaks.log
 
 :: Disable PowerThrottling for better performance
 echo Disabling PowerThrottling...
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Power\PowerThrottling" /v "PowerThrottlingOff" /t REG_DWORD /d "1" /f >> S1nce.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Power\PowerThrottling" /v "PowerThrottlingOff" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
 
 :: Disable Fast Startup (causes issues with some systems)
 echo Disabling Fast Startup...
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Power" /v "HiberbootEnabled" /t REG_DWORD /d "0" /f >> S1nce.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Power" /v "HiberbootEnabled" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
 
 :: Disable selective suspend
 echo Optimizing USB power settings...
@@ -327,7 +327,7 @@ for /f "tokens=*" %%i in ('powershell -command "Get-PnpDevice -PresentOnly | Whe
     reg add "HKLM\SYSTEM\CurrentControlSet\Enum\%%i\Device Parameters" /v "EnhancedPowerManagementEnabled" /t REG_DWORD /d "0" /f 2>nul
     reg add "HKLM\SYSTEM\CurrentControlSet\Enum\%%i\Device Parameters" /v "AllowIdleIrpInD3" /t REG_DWORD /d "0" /f 2>nul
     reg add "HKLM\SYSTEM\CurrentControlSet\Enum\%%i\Device Parameters" /v "EnableSelectiveSuspend" /t REG_DWORD /d "0" /f 2>nul
-    echo Optimized USB device: %%i >> S1nce.log
+    echo Optimized USB device: %%i >> s1ncetweaks.log
 )
 
 echo.
@@ -362,7 +362,7 @@ set /p svc=Enter your choice (1-4):
 
 if "%svc%"=="1" (
     echo Disabling non-essential services...
-    echo [Services - Recommended] >> S1nce.log
+    echo [Services - Recommended] >> s1ncetweaks.log
     
     for %%a in (
       DiagTrack
@@ -373,8 +373,8 @@ if "%svc%"=="1" (
       WSearch
       TrkWks
     ) do (
-      sc config %%a start= disabled >> S1nce.log
-      sc stop %%a >> S1nce.log
+      sc config %%a start= disabled >> s1ncetweaks.log
+      sc stop %%a >> s1ncetweaks.log
       echo Disabled service: %%a
     )
     
@@ -383,7 +383,7 @@ if "%svc%"=="1" (
 
 if "%svc%"=="2" (
     echo Disabling all unnecessary services...
-    echo [Services - Aggressive] >> S1nce.log
+    echo [Services - Aggressive] >> s1ncetweaks.log
     
     for %%a in (
       DiagTrack
@@ -408,8 +408,8 @@ if "%svc%"=="2" (
       WalletService
       TokenBroker
     ) do (
-      sc config %%a start= disabled >> S1nce.log
-      sc stop %%a >> S1nce.log
+      sc config %%a start= disabled >> s1ncetweaks.log
+      sc stop %%a >> s1ncetweaks.log
       echo Disabled service: %%a
     )
     
@@ -418,7 +418,7 @@ if "%svc%"=="2" (
 
 if "%svc%"=="3" (
     echo Restoring default services...
-    echo [Services - Restore Default] >> S1nce.log
+    echo [Services - Restore Default] >> s1ncetweaks.log
     
     for %%a in (
       DiagTrack
@@ -427,8 +427,8 @@ if "%svc%"=="3" (
       SysMain
       WSearch
     ) do (
-      sc config %%a start= auto >> S1nce.log
-      sc start %%a >> S1nce.log
+      sc config %%a start= auto >> s1ncetweaks.log
+      sc start %%a >> s1ncetweaks.log
       echo Restored service: %%a
     )
     
@@ -440,7 +440,7 @@ if "%svc%"=="3" (
       DoSvc
       UsoSvc
     ) do (
-      sc config %%a start= demand >> S1nce.log
+      sc config %%a start= demand >> s1ncetweaks.log
       echo Restored service: %%a
     )
     
@@ -476,28 +476,28 @@ set /p boot=Enter your choice (1-3):
 
 if "%boot%"=="1" (
     echo Applying Standard Boot Configuration Tweaks...
-    echo [Boot Tweaks - Standard] >> S1nce.log
+    echo [Boot Tweaks - Standard] >> s1ncetweaks.log
 
     :: Standard Boot Parameters
-    bcdedit /deletevalue useplatformclock >> S1nce.log
-    bcdedit /set disabledynamictick yes >> S1nce.log
-    bcdedit /set bootmenupolicy Legacy >> S1nce.log
+    bcdedit /deletevalue useplatformclock >> s1ncetweaks.log
+    bcdedit /set disabledynamictick yes >> s1ncetweaks.log
+    bcdedit /set bootmenupolicy Legacy >> s1ncetweaks.log
     
     echo Standard boot tweaks applied.
 )
 
 if "%boot%"=="2" (
     echo Applying Advanced Boot Configuration Tweaks...
-    echo [Boot Tweaks - Advanced] >> S1nce.log
+    echo [Boot Tweaks - Advanced] >> s1ncetweaks.log
 
     :: Advanced Boot Parameters - includes disabling virtualization
-    bcdedit /deletevalue useplatformclock >> S1nce.log
-    bcdedit /set disableelamdrivers Yes >> S1nce.log
-    bcdedit /set bootmenupolicy Legacy >> S1nce.log
-    bcdedit /set disabledynamictick yes >> S1nce.log
-    bcdedit /set hypervisorlaunchtype Off >> S1nce.log
-    bcdedit /set nx OptIn >> S1nce.log
-    bcdedit /set isolatedcontext No >> S1nce.log
+    bcdedit /deletevalue useplatformclock >> s1ncetweaks.log
+    bcdedit /set disableelamdrivers Yes >> s1ncetweaks.log
+    bcdedit /set bootmenupolicy Legacy >> s1ncetweaks.log
+    bcdedit /set disabledynamictick yes >> s1ncetweaks.log
+    bcdedit /set hypervisorlaunchtype Off >> s1ncetweaks.log
+    bcdedit /set nx OptIn >> s1ncetweaks.log
+    bcdedit /set isolatedcontext No >> s1ncetweaks.log
     
     echo Advanced boot tweaks applied.
 )
@@ -520,12 +520,12 @@ echo ║             GPU OPTIMIZATION                   ║
 echo ╚════════════════════════════════════════════════╝
 echo.
 echo Detecting GPU...
-echo [GPU Optimization] >> S1nce.log
+echo [GPU Optimization] >> s1ncetweaks.log
 
 :: Detect GPU
 for /f "tokens=*" %%i in ('wmic path win32_VideoController get name ^| findstr "NVIDIA AMD Intel"') do (
     set "gpu=%%i"
-    echo Detected GPU: %%i >> S1nce.log
+    echo Detected GPU: %%i >> s1ncetweaks.log
 )
 
 echo Detected: %gpu%
@@ -542,16 +542,16 @@ if "%gpuchoice%"=="1" (
     echo Applying Generic GPU Optimizations...
     
     :: Windows Graphics Settings
-    reg add "HKCU\SOFTWARE\Microsoft\DirectX\UserGpuPreferences" /v "DirectXUserGlobalSettings" /t REG_SZ /d "VRROptimizeEnable=0;" /f >> S1nce.log
+    reg add "HKCU\SOFTWARE\Microsoft\DirectX\UserGpuPreferences" /v "DirectXUserGlobalSettings" /t REG_SZ /d "VRROptimizeEnable=0;" /f >> s1ncetweaks.log
     
     :: Game Mode and Game Bar Settings
-    reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v "AutoGameModeEnabled" /t REG_DWORD /d "1" /f >> S1nce.log
-    reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v "AllowAutoGameMode" /t REG_DWORD /d "1" /f >> S1nce.log
-    reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v "ShowStartupPanel" /t REG_DWORD /d "0" /f >> S1nce.log
-    reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v "UseNexusForGameBarEnabled" /t REG_DWORD /d "0" /f >> S1nce.log
+    reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v "AutoGameModeEnabled" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+    reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v "AllowAutoGameMode" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+    reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v "ShowStartupPanel" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+    reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v "UseNexusForGameBarEnabled" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
     
     :: DXGI Settings
-    reg add "HKLM\SOFTWARE\Microsoft\Graphics Drivers" /v "HwSchMode" /t REG_DWORD /d "2" /f >> S1nce.log
+    reg add "HKLM\SOFTWARE\Microsoft\Graphics Drivers" /v "HwSchMode" /t REG_DWORD /d "2" /f >> s1ncetweaks.log
     
     echo Generic GPU optimizations applied.
 )
@@ -560,12 +560,12 @@ if "%gpuchoice%"=="2" (
     echo Optimizing for NVIDIA GPUs...
     
     :: NVIDIA-specific registry tweaks
-    reg add "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers" /v "TdrDelay" /t REG_DWORD /d "8" /f >> S1nce.log
-    reg add "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers" /v "TdrDdiDelay" /t REG_DWORD /d "8" /f >> S1nce.log
+    reg add "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers" /v "TdrDelay" /t REG_DWORD /d "8" /f >> s1ncetweaks.log
+    reg add "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers" /v "TdrDdiDelay" /t REG_DWORD /d "8" /f >> s1ncetweaks.log
     
     :: NVIDIA Power Settings
-    reg add "HKLM\SYSTEM\CurrentControlSet\Control\Graphics\Configs\NVIDIA (*(D3)*(*)) NVIDIA" /v "PowerMizer_Enable" /t REG_DWORD /d "1" /f >> S1nce.log
-    reg add "HKLM\SYSTEM\CurrentControlSet\Control\Graphics\Configs\NVIDIA (*(D3)*(*)) NVIDIA" /v "PowerMizer_Level" /t REG_DWORD /d "1" /f >> S1nce.log
+    reg add "HKLM\SYSTEM\CurrentControlSet\Control\Graphics\Configs\NVIDIA (*(D3)*(*)) NVIDIA" /v "PowerMizer_Enable" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+    reg add "HKLM\SYSTEM\CurrentControlSet\Control\Graphics\Configs\NVIDIA (*(D3)*(*)) NVIDIA" /v "PowerMizer_Level" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
     
     echo NVIDIA optimizations applied.
 )
@@ -574,8 +574,8 @@ if "%gpuchoice%"=="3" (
     echo Optimizing for AMD GPUs...
     
     :: AMD-specific registry tweaks
-    reg add "HKLM\SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\0000" /v "EnableUlps" /t REG_DWORD /d "0" /f >> S1nce.log
-    reg add "HKLM\SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\0000" /v "PP_SclkDeepSleepDisable" /t REG_DWORD /d "1" /f >> S1nce.log
+    reg add "HKLM\SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\0000" /v "EnableUlps" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+    reg add "HKLM\SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\0000" /v "PP_SclkDeepSleepDisable" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
     
     echo AMD optimizations applied.
 )
@@ -584,7 +584,7 @@ if "%gpuchoice%"=="4" (
     echo Optimizing for Intel GPUs...
     
     :: Intel-specific registry tweaks
-    reg add "HKLM\SOFTWARE\Intel\GMM" /v "DedicatedSegmentSize" /t REG_DWORD /d "512" /f >> S1nce.log
+    reg add "HKLM\SOFTWARE\Intel\GMM" /v "DedicatedSegmentSize" /t REG_DWORD /d "512" /f >> s1ncetweaks.log
     
     echo Intel optimizations applied.
 )
@@ -613,27 +613,27 @@ echo Processing...
 
 :: Memory Management
 echo Applying Memory Management Tweaks...
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "EnableCfg" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "FeatureSettings" /t REG_DWORD /d "1" /f >> S1nce.log
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "FeatureSettingsOverride" /t REG_DWORD /d "3" /f >> S1nce.log
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "FeatureSettingsOverrideMask" /t REG_DWORD /d "3" /f >> S1nce.log
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters" /v "EnablePrefetcher" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters" /v "EnableSuperfetch" /t REG_DWORD /d "0" /f >> S1nce.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "EnableCfg" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "FeatureSettings" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "FeatureSettingsOverride" /t REG_DWORD /d "3" /f >> s1ncetweaks.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "FeatureSettingsOverrideMask" /t REG_DWORD /d "3" /f >> s1ncetweaks.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters" /v "EnablePrefetcher" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters" /v "EnableSuperfetch" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
 
 :: Process Priority Control
 echo Setting Process Priority Control...
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\PriorityControl" /v "Win32PrioritySeparation" /t REG_DWORD /d "36" /f >> S1nce.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\PriorityControl" /v "Win32PrioritySeparation" /t REG_DWORD /d "36" /f >> s1ncetweaks.log
 
 :: System Responsiveness
 echo Setting System Responsiveness...
-reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v "SystemResponsiveness" /t REG_DWORD /d "10" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Affinity" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Background Only" /t REG_SZ /d "False" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Clock Rate" /t REG_DWORD /d "10000" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "GPU Priority" /t REG_DWORD /d "8" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Priority" /t REG_DWORD /d "6" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Scheduling Category" /t REG_SZ /d "High" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "SFIO Priority" /t REG_SZ /d "High" /f >> S1nce.log
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v "SystemResponsiveness" /t REG_DWORD /d "10" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Affinity" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Background Only" /t REG_SZ /d "False" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Clock Rate" /t REG_DWORD /d "10000" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "GPU Priority" /t REG_DWORD /d "8" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Priority" /t REG_DWORD /d "6" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Scheduling Category" /t REG_SZ /d "High" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "SFIO Priority" /t REG_SZ /d "High" /f >> s1ncetweaks.log
 
 :: Service Host threshold based on RAM detection
 echo Setting Service Host Split Threshold...
@@ -656,23 +656,23 @@ echo.
 set /p ram=Enter your choice (1-6): 
 
 if "%ram%"=="1" (
-    reg add "HKLM\SYSTEM\CurrentControlSet\Control" /v "SvcHostSplitThresholdInKB" /t REG_DWORD /d "4194304" /f >> S1nce.log
+    reg add "HKLM\SYSTEM\CurrentControlSet\Control" /v "SvcHostSplitThresholdInKB" /t REG_DWORD /d "4194304" /f >> s1ncetweaks.log
     echo Service Host Threshold set for 4 GB RAM.
 )
 if "%ram%"=="2" (
-    reg add "HKLM\SYSTEM\CurrentControlSet\Control" /v "SvcHostSplitThresholdInKB" /t REG_DWORD /d "8388608" /f >> S1nce.log
+    reg add "HKLM\SYSTEM\CurrentControlSet\Control" /v "SvcHostSplitThresholdInKB" /t REG_DWORD /d "8388608" /f >> s1ncetweaks.log
     echo Service Host Threshold set for 8 GB RAM.
 )
 if "%ram%"=="3" (
-    reg add "HKLM\SYSTEM\CurrentControlSet\Control" /v "SvcHostSplitThresholdInKB" /t REG_DWORD /d "16777216" /f >> S1nce.log
+    reg add "HKLM\SYSTEM\CurrentControlSet\Control" /v "SvcHostSplitThresholdInKB" /t REG_DWORD /d "16777216" /f >> s1ncetweaks.log
     echo Service Host Threshold set for 16 GB RAM.
 )
 if "%ram%"=="4" (
-    reg add "HKLM\SYSTEM\CurrentControlSet\Control" /v "SvcHostSplitThresholdInKB" /t REG_DWORD /d "33554432" /f >> S1nce.log
+    reg add "HKLM\SYSTEM\CurrentControlSet\Control" /v "SvcHostSplitThresholdInKB" /t REG_DWORD /d "33554432" /f >> s1ncetweaks.log
     echo Service Host Threshold set for 32 GB RAM.
 )
 if "%ram%"=="5" (
-    reg add "HKLM\SYSTEM\CurrentControlSet\Control" /v "SvcHostSplitThresholdInKB" /t REG_DWORD /d "67108864" /f >> S1nce.log
+    reg add "HKLM\SYSTEM\CurrentControlSet\Control" /v "SvcHostSplitThresholdInKB" /t REG_DWORD /d "67108864" /f >> s1ncetweaks.log
     echo Service Host Threshold set for 64 GB RAM.
 )
 
@@ -688,16 +688,16 @@ if "%ram%" NEQ "7" (
 
 :: Process and Kernel Mitigations (Standard)
 echo Disabling Process Mitigations...
-powershell -Command "Set-ProcessMitigation -System -Disable CFG, ForceRelocateImages, RequireInfo, BottomUp, HighEntropy" >> S1nce.log
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\kernel" /v "MitigationOptions" /t REG_BINARY /d "222222222222222222222222222222222222222222222222222222222222222" /f >> S1nce.log
+powershell -Command "Set-ProcessMitigation -System -Disable CFG, ForceRelocateImages, RequireInfo, BottomUp, HighEntropy" >> s1ncetweaks.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\kernel" /v "MitigationOptions" /t REG_BINARY /d "222222222222222222222222222222222222222222222222222222222222222" /f >> s1ncetweaks.log
 
 :: Import optimized power plan and disable hibernation
 echo Optimizing Power Settings...
-powercfg -import "%s1nce%\Khorvie.pow" 7f5875ed-2f22-4ba1-b357-3188ac5702a9 >> S1nce.log
-powercfg -setactive 7f5875ed-2f22-4ba1-b357-3188ac5702a9 >> S1nce.log
-powercfg -h off >> S1nce.log
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Power\PowerThrottling" /v "PowerThrottlingOff" /t REG_DWORD /d "1" /f >> S1nce.log
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Power" /v "HiberbootEnabled" /t REG_DWORD /d "0" /f >> S1nce.log
+powercfg -import "%s1nce%\Khorvie.pow" 7f5875ed-2f22-4ba1-b357-3188ac5702a9 >> s1ncetweaks.log
+powercfg -setactive 7f5875ed-2f22-4ba1-b357-3188ac5702a9 >> s1ncetweaks.log
+powercfg -h off >> s1ncetweaks.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Power\PowerThrottling" /v "PowerThrottlingOff" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Power" /v "HiberbootEnabled" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
 
 :: Disable USB power savings
 echo Optimizing USB power settings...
@@ -718,33 +718,33 @@ for %%a in (
   WSearch
   TrkWks
 ) do (
-  sc config %%a start= disabled >> S1nce.log
-  sc stop %%a >> S1nce.log
+  sc config %%a start= disabled >> s1ncetweaks.log
+  sc stop %%a >> s1ncetweaks.log
 )
 
 :: Boot Parameters
 echo Applying Boot Parameters...
-bcdedit /deletevalue useplatformclock >> S1nce.log
-bcdedit /set disabledynamictick yes >> S1nce.log
-bcdedit /set bootmenupolicy Legacy >> S1nce.log
+bcdedit /deletevalue useplatformclock >> s1ncetweaks.log
+bcdedit /set disabledynamictick yes >> s1ncetweaks.log
+bcdedit /set bootmenupolicy Legacy >> s1ncetweaks.log
 
 :: Quality of Life Tweaks
 echo Applying Quality of Life Tweaks...
-reg add "HKCU\Control Panel\Desktop" /v "MenuShowDelay" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKCU\Control Panel\Mouse" /v "MouseThreshold1" /t REG_SZ /d "0" /f >> S1nce.log
-reg add "HKCU\Control Panel\Mouse" /v "MouseThreshold2" /t REG_SZ /d "0" /f >> S1nce.log
-reg add "HKCU\Control Panel\Mouse" /v "MouseSpeed" /t REG_SZ /d "0" /f >> S1nce.log
-reg add "HKCU\Control Panel\Keyboard" /v "KeyboardDelay" /t REG_SZ /d "0" /f >> S1nce.log
-reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "HideFileExt" /t REG_DWORD /d 0 /f >> S1nce.log
-reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "DisallowShaking" /t REG_DWORD /d "1" /f >> S1nce.log
+reg add "HKCU\Control Panel\Desktop" /v "MenuShowDelay" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\Control Panel\Mouse" /v "MouseThreshold1" /t REG_SZ /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\Control Panel\Mouse" /v "MouseThreshold2" /t REG_SZ /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\Control Panel\Mouse" /v "MouseSpeed" /t REG_SZ /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\Control Panel\Keyboard" /v "KeyboardDelay" /t REG_SZ /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "HideFileExt" /t REG_DWORD /d 0 /f >> s1ncetweaks.log
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "DisallowShaking" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
 
 :: GPU Optimizations (Generic)
 echo Applying Generic GPU Optimizations...
-reg add "HKCU\SOFTWARE\Microsoft\DirectX\UserGpuPreferences" /v "DirectXUserGlobalSettings" /t REG_SZ /d "VRROptimizeEnable=0;" /f >> S1nce.log
-reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v "AutoGameModeEnabled" /t REG_DWORD /d "1" /f >> S1nce.log
-reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v "AllowAutoGameMode" /t REG_DWORD /d "1" /f >> S1nce.log
-reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v "ShowStartupPanel" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Microsoft\Graphics Drivers" /v "HwSchMode" /t REG_DWORD /d "2" /f >> S1nce.log
+reg add "HKCU\SOFTWARE\Microsoft\DirectX\UserGpuPreferences" /v "DirectXUserGlobalSettings" /t REG_SZ /d "VRROptimizeEnable=0;" /f >> s1ncetweaks.log
+reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v "AutoGameModeEnabled" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v "AllowAutoGameMode" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v "ShowStartupPanel" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Microsoft\Graphics Drivers" /v "HwSchMode" /t REG_DWORD /d "2" /f >> s1ncetweaks.log
 
 echo.
 echo All performance tweaks have been applied successfully!
@@ -785,32 +785,32 @@ echo ║       TELEMETRY AND DATA COLLECTION            ║
 echo ╚════════════════════════════════════════════════╝
 echo.
 echo Disabling Telemetry and Data Collection...
-echo [Telemetry Tweaks] >> S1nce.log
+echo [Telemetry Tweaks] >> s1ncetweaks.log
 
 :: Disable Telemetry
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v "AITEnable" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v "DisableInventory" /t REG_DWORD /d "1" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v "DisableUAR" /t REG_DWORD /d "1" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\WMI\Autologger\AutoLogger-Diagtrack-Listener" /v "Start" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Privacy" /v "TailoredExperiencesWithDiagnosticDataEnabled" /t REG_DWORD /d "0" /f >> S1nce.log
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v "AITEnable" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v "DisableInventory" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v "DisableUAR" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\WMI\Autologger\AutoLogger-Diagtrack-Listener" /v "Start" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Privacy" /v "TailoredExperiencesWithDiagnosticDataEnabled" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
 
 :: Disable additional telemetry
-reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo" /v "Enabled" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo" /v "Enabled" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKCU\SOFTWARE\Microsoft\Personalization\Settings" /v "AcceptedPrivacyPolicy" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SettingSync" /v "SyncPolicy" /t REG_DWORD /d "5" /f >> S1nce.log
-reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SettingSync\Groups\BrowserSettings" /v "Enabled" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SettingSync\Groups\Credentials" /v "Enabled" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SettingSync\Groups\Language" /v "Enabled" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SettingSync\Groups\Personalization" /v "Enabled" /t REG_DWORD /d "0" /f >> S1nce.log
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo" /v "Enabled" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo" /v "Enabled" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\SOFTWARE\Microsoft\Personalization\Settings" /v "AcceptedPrivacyPolicy" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SettingSync" /v "SyncPolicy" /t REG_DWORD /d "5" /f >> s1ncetweaks.log
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SettingSync\Groups\BrowserSettings" /v "Enabled" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SettingSync\Groups\Credentials" /v "Enabled" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SettingSync\Groups\Language" /v "Enabled" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SettingSync\Groups\Personalization" /v "Enabled" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
 
 :: Disable DiagTrack service
-sc config DiagTrack start= disabled >> S1nce.log
-sc stop DiagTrack >> S1nce.log
-sc config dmwappushservice start= disabled >> S1nce.log
-sc stop dmwappushservice >> S1nce.log
+sc config DiagTrack start= disabled >> s1ncetweaks.log
+sc stop DiagTrack >> s1ncetweaks.log
+sc config dmwappushservice start= disabled >> s1ncetweaks.log
+sc stop dmwappushservice >> s1ncetweaks.log
 
 echo.
 echo Telemetry and data collection have been disabled.
@@ -826,16 +826,16 @@ echo ║         WINDOWS ERROR REPORTING                ║
 echo ╚════════════════════════════════════════════════╝
 echo.
 echo Disabling Windows Error Reporting...
-echo [Error Reporting Tweaks] >> S1nce.log
+echo [Error Reporting Tweaks] >> s1ncetweaks.log
 
 :: Disable Error Reporting
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting" /v "Disabled" /t REG_DWORD /d "1" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting" /v "Disabled" /t REG_DWORD /d "1" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting\WerKernelReporting" /v "DisableKernelReporting" /t REG_DWORD /d "1" /f >> S1nce.log
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting" /v "Disabled" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting" /v "Disabled" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting\WerKernelReporting" /v "DisableKernelReporting" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
 
 :: Disable WER Service
-sc config WerSvc start= disabled >> S1nce.log
-sc stop WerSvc >> S1nce.log
+sc config WerSvc start= disabled >> s1ncetweaks.log
+sc stop WerSvc >> s1ncetweaks.log
 
 echo.
 echo Windows Error Reporting has been disabled.
@@ -863,22 +863,22 @@ set /p def=Enter your choice (1-4):
 
 if "%def%"=="1" (
     echo Disabling Windows Defender...
-    echo [Windows Defender - Disabled] >> S1nce.log
+    echo [Windows Defender - Disabled] >> s1ncetweaks.log
     
     :: Disable Windows Defender through registry
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" /v "DisableAntiSpyware" /t REG_DWORD /d "1" /f >> S1nce.log
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableBehaviorMonitoring" /t REG_DWORD /d "1" /f >> S1nce.log
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableOnAccessProtection" /t REG_DWORD /d "1" /f >> S1nce.log
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableScanOnRealtimeEnable" /t REG_DWORD /d "1" /f >> S1nce.log
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Reporting" /v "DisableEnhancedNotifications" /t REG_DWORD /d "1" /f >> S1nce.log
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" /v "DisableAntiSpyware" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableBehaviorMonitoring" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableOnAccessProtection" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableScanOnRealtimeEnable" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Reporting" /v "DisableEnhancedNotifications" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
     
     :: Disable services
-    sc config WinDefend start= disabled >> S1nce.log
-    sc stop WinDefend >> S1nce.log
-    sc config WdNisSvc start= disabled >> S1nce.log
-    sc stop WdNisSvc >> S1nce.log
-    sc config Sense start= disabled >> S1nce.log
-    sc stop Sense >> S1nce.log
+    sc config WinDefend start= disabled >> s1ncetweaks.log
+    sc stop WinDefend >> s1ncetweaks.log
+    sc config WdNisSvc start= disabled >> s1ncetweaks.log
+    sc stop WdNisSvc >> s1ncetweaks.log
+    sc config Sense start= disabled >> s1ncetweaks.log
+    sc stop Sense >> s1ncetweaks.log
     
     echo Windows Defender has been disabled.
     echo [WARNING] Your system is now more vulnerable to malware.
@@ -887,21 +887,21 @@ if "%def%"=="1" (
 
 if "%def%"=="2" (
     echo Optimizing Windows Defender...
-    echo [Windows Defender - Optimized] >> S1nce.log
+    echo [Windows Defender - Optimized] >> s1ncetweaks.log
     
     :: Optimize Windows Defender without disabling it
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableRawWriteNotification" /t REG_DWORD /d "1" /f >> S1nce.log
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Reporting" /v "DisableEnhancedNotifications" /t REG_DWORD /d "1" /f >> S1nce.log
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableArchiveScanning" /t REG_DWORD /d "1" /f >> S1nce.log
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableCatchupFullScan" /t REG_DWORD /d "1" /f >> S1nce.log
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableCatchupQuickScan" /t REG_DWORD /d "1" /f >> S1nce.log
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableEmailScanning" /t REG_DWORD /d "1" /f >> S1nce.log
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableRemovableDriveScanning" /t REG_DWORD /d "1" /f >> S1nce.log
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableHeuristics" /t REG_DWORD /d "1" /f >> S1nce.log
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableRawWriteNotification" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Reporting" /v "DisableEnhancedNotifications" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableArchiveScanning" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableCatchupFullScan" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableCatchupQuickScan" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableEmailScanning" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableRemovableDriveScanning" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableHeuristics" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
     
     :: Add exclusion for games folder
-    powershell -Command "Add-MpPreference -ExclusionPath 'C:\Program Files (x86)\Steam'" >> S1nce.log
-    powershell -Command "Add-MpPreference -ExclusionPath 'C:\Program Files\Epic Games'" >> S1nce.log
+    powershell -Command "Add-MpPreference -ExclusionPath 'C:\Program Files (x86)\Steam'" >> s1ncetweaks.log
+    powershell -Command "Add-MpPreference -ExclusionPath 'C:\Program Files\Epic Games'" >> s1ncetweaks.log
     
     echo Windows Defender has been optimized for better performance
     echo while maintaining essential protection.
@@ -909,19 +909,19 @@ if "%def%"=="2" (
 
 if "%def%"=="3" (
     echo Re-enabling Windows Defender...
-    echo [Windows Defender - Enabled] >> S1nce.log
+    echo [Windows Defender - Enabled] >> s1ncetweaks.log
     
     :: Re-enable Windows Defender
-    reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" /v "DisableAntiSpyware" /f >> S1nce.log 2>nul
-    reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableBehaviorMonitoring" /f >> S1nce.log 2>nul
-    reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableOnAccessProtection" /f >> S1nce.log 2>nul
-    reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableScanOnRealtimeEnable" /f >> S1nce.log 2>nul
+    reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" /v "DisableAntiSpyware" /f >> s1ncetweaks.log 2>nul
+    reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableBehaviorMonitoring" /f >> s1ncetweaks.log 2>nul
+    reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableOnAccessProtection" /f >> s1ncetweaks.log 2>nul
+    reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableScanOnRealtimeEnable" /f >> s1ncetweaks.log 2>nul
     
     :: Re-enable services
-    sc config WinDefend start= auto >> S1nce.log
-    sc start WinDefend >> S1nce.log
-    sc config WdNisSvc start= auto >> S1nce.log
-    sc start WdNisSvc >> S1nce.log
+    sc config WinDefend start= auto >> s1ncetweaks.log
+    sc start WinDefend >> s1ncetweaks.log
+    sc config WdNisSvc start= auto >> s1ncetweaks.log
+    sc start WdNisSvc >> s1ncetweaks.log
     
     echo Windows Defender has been re-enabled.
 )
@@ -944,7 +944,7 @@ echo ║               OO SHUTUP10                      ║
 echo ╚════════════════════════════════════════════════╝
 echo.
 echo Running OO ShutUp10 with recommended settings...
-echo [OO ShutUp10] >> S1nce.log
+echo [OO ShutUp10] >> s1ncetweaks.log
 
 start "" /wait "%s1nce%\OOSU10.exe" "%s1nce%\ooshutup10.cfg" /quiet
 
@@ -968,37 +968,37 @@ echo Processing...
 
 :: Telemetry and Data Collection
 echo Disabling Telemetry and Data Collection...
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v "AITEnable" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v "DisableInventory" /t REG_DWORD /d "1" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v "DisableUAR" /t REG_DWORD /d "1" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\WMI\Autologger\AutoLogger-Diagtrack-Listener" /v "Start" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Privacy" /v "TailoredExperiencesWithDiagnosticDataEnabled" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo" /v "Enabled" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo" /v "Enabled" /t REG_DWORD /d "0" /f >> S1nce.log
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v "AITEnable" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v "DisableInventory" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v "DisableUAR" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\WMI\Autologger\AutoLogger-Diagtrack-Listener" /v "Start" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Privacy" /v "TailoredExperiencesWithDiagnosticDataEnabled" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo" /v "Enabled" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo" /v "Enabled" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
 
 :: Error Reporting
 echo Disabling Windows Error Reporting...
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting" /v "Disabled" /t REG_DWORD /d "1" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting" /v "Disabled" /t REG_DWORD /d "1" /f >> S1nce.log
-sc config WerSvc start= disabled >> S1nce.log
-sc stop WerSvc >> S1nce.log
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting" /v "Disabled" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting" /v "Disabled" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+sc config WerSvc start= disabled >> s1ncetweaks.log
+sc stop WerSvc >> s1ncetweaks.log
 
 :: Defender Optimization (not disabling)
 echo Optimizing Windows Defender...
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableRawWriteNotification" /t REG_DWORD /d "1" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Reporting" /v "DisableEnhancedNotifications" /t REG_DWORD /d "1" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableArchiveScanning" /t REG_DWORD /d "1" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableCatchupFullScan" /t REG_DWORD /d "1" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableCatchupQuickScan" /t REG_DWORD /d "1" /f >> S1nce.log
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableRawWriteNotification" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Reporting" /v "DisableEnhancedNotifications" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableArchiveScanning" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableCatchupFullScan" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableCatchupQuickScan" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
 
 :: Disable diagnostic services
 echo Disabling Diagnostic Services...
-sc config DiagTrack start= disabled >> S1nce.log
-sc stop DiagTrack >> S1nce.log
-sc config dmwappushservice start= disabled >> S1nce.log
-sc stop dmwappushservice >> S1nce.log
+sc config DiagTrack start= disabled >> s1ncetweaks.log
+sc stop DiagTrack >> s1ncetweaks.log
+sc config dmwappushservice start= disabled >> s1ncetweaks.log
+sc stop dmwappushservice >> s1ncetweaks.log
 
 :: Run O&O ShutUp10
 echo Running OO ShutUp10...
@@ -1021,27 +1021,27 @@ echo Processing...
 
 :: Memory Management
 echo Applying Memory Management Tweaks...
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "EnableCfg" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "FeatureSettings" /t REG_DWORD /d "1" /f >> S1nce.log
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "FeatureSettingsOverride" /t REG_DWORD /d "3" /f >> S1nce.log
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "FeatureSettingsOverrideMask" /t REG_DWORD /d "3" /f >> S1nce.log
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters" /v "EnablePrefetcher" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters" /v "EnableSuperfetch" /t REG_DWORD /d "0" /f >> S1nce.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "EnableCfg" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "FeatureSettings" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "FeatureSettingsOverride" /t REG_DWORD /d "3" /f >> s1ncetweaks.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v "FeatureSettingsOverrideMask" /t REG_DWORD /d "3" /f >> s1ncetweaks.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters" /v "EnablePrefetcher" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters" /v "EnableSuperfetch" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
 
 :: Process Priority Control
 echo Setting Process Priority Control...
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\PriorityControl" /v "Win32PrioritySeparation" /t REG_DWORD /d "38" /f >> S1nce.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\PriorityControl" /v "Win32PrioritySeparation" /t REG_DWORD /d "38" /f >> s1ncetweaks.log
 
 :: System Responsiveness
 echo Setting System Responsiveness...
-reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v "SystemResponsiveness" /t REG_DWORD /d "10" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Affinity" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Background Only" /t REG_SZ /d "False" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Clock Rate" /t REG_DWORD /d "10000" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "GPU Priority" /t REG_DWORD /d "8" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Priority" /t REG_DWORD /d "6" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Scheduling Category" /t REG_SZ /d "High" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "SFIO Priority" /t REG_SZ /d "High" /f >> S1nce.log
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v "SystemResponsiveness" /t REG_DWORD /d "10" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Affinity" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Background Only" /t REG_SZ /d "False" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Clock Rate" /t REG_DWORD /d "10000" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "GPU Priority" /t REG_DWORD /d "8" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Priority" /t REG_DWORD /d "6" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Scheduling Category" /t REG_SZ /d "High" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "SFIO Priority" /t REG_SZ /d "High" /f >> s1ncetweaks.log
 
 :: Service Host threshold based on RAM detection
 echo Setting Service Host Split Threshold...
@@ -1050,27 +1050,27 @@ for /f "tokens=2 delims==" %%a in ('wmic ComputerSystem get TotalPhysicalMemory 
 set /a MB=%bytes:~0,-1%/1048576
 
 if %MB% LSS 8192 (
-    reg add "HKLM\SYSTEM\CurrentControlSet\Control" /v "SvcHostSplitThresholdInKB" /t REG_DWORD /d "4194304" /f >> S1nce.log
+    reg add "HKLM\SYSTEM\CurrentControlSet\Control" /v "SvcHostSplitThresholdInKB" /t REG_DWORD /d "4194304" /f >> s1ncetweaks.log
 ) else if %MB% LSS 16384 (
-    reg add "HKLM\SYSTEM\CurrentControlSet\Control" /v "SvcHostSplitThresholdInKB" /t REG_DWORD /d "8388608" /f >> S1nce.log
+    reg add "HKLM\SYSTEM\CurrentControlSet\Control" /v "SvcHostSplitThresholdInKB" /t REG_DWORD /d "8388608" /f >> s1ncetweaks.log
 ) else if %MB% LSS 32768 (
-    reg add "HKLM\SYSTEM\CurrentControlSet\Control" /v "SvcHostSplitThresholdInKB" /t REG_DWORD /d "16777216" /f >> S1nce.log
+    reg add "HKLM\SYSTEM\CurrentControlSet\Control" /v "SvcHostSplitThresholdInKB" /t REG_DWORD /d "16777216" /f >> s1ncetweaks.log
 ) else (
-    reg add "HKLM\SYSTEM\CurrentControlSet\Control" /v "SvcHostSplitThresholdInKB" /t REG_DWORD /d "33554432" /f >> S1nce.log
+    reg add "HKLM\SYSTEM\CurrentControlSet\Control" /v "SvcHostSplitThresholdInKB" /t REG_DWORD /d "33554432" /f >> s1ncetweaks.log
 )
 
 :: Process and Kernel Mitigations (Standard)
 echo Disabling Process Mitigations...
-powershell -Command "Set-ProcessMitigation -System -Disable CFG, ForceRelocateImages, RequireInfo, BottomUp, HighEntropy" >> S1nce.log
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\kernel" /v "MitigationOptions" /t REG_BINARY /d "222222222222222222222222222222222222222222222222222222222222222" /f >> S1nce.log
+powershell -Command "Set-ProcessMitigation -System -Disable CFG, ForceRelocateImages, RequireInfo, BottomUp, HighEntropy" >> s1ncetweaks.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\kernel" /v "MitigationOptions" /t REG_BINARY /d "222222222222222222222222222222222222222222222222222222222222222" /f >> s1ncetweaks.log
 
 :: Import optimized power plan and disable hibernation
 echo Optimizing Power Settings...
-powercfg -import "%s1nce%\Khorvie.pow" 7f5875ed-2f22-4ba1-b357-3188ac5702a9 >> S1nce.log
-powercfg -setactive 7f5875ed-2f22-4ba1-b357-3188ac5702a9 >> S1nce.log
-powercfg -h off >> S1nce.log
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Power\PowerThrottling" /v "PowerThrottlingOff" /t REG_DWORD /d "1" /f >> S1nce.log
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Power" /v "HiberbootEnabled" /t REG_DWORD /d "0" /f >> S1nce.log
+powercfg -import "%s1nce%\Khorvie.pow" 7f5875ed-2f22-4ba1-b357-3188ac5702a9 >> s1ncetweaks.log
+powercfg -setactive 7f5875ed-2f22-4ba1-b357-3188ac5702a9 >> s1ncetweaks.log
+powercfg -h off >> s1ncetweaks.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Power\PowerThrottling" /v "PowerThrottlingOff" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Power" /v "HiberbootEnabled" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
 
 :: Disable USB power savings
 echo Optimizing USB power settings...
@@ -1091,33 +1091,33 @@ for %%a in (
   WSearch
   TrkWks
 ) do (
-  sc config %%a start= disabled >> S1nce.log
-  sc stop %%a >> S1nce.log
+  sc config %%a start= disabled >> s1ncetweaks.log
+  sc stop %%a >> s1ncetweaks.log
 )
 
 :: Boot Parameters
 echo Applying Boot Parameters...
-bcdedit /deletevalue useplatformclock >> S1nce.log
-bcdedit /set disabledynamictick yes >> S1nce.log
-bcdedit /set bootmenupolicy Legacy >> S1nce.log
+bcdedit /deletevalue useplatformclock >> s1ncetweaks.log
+bcdedit /set disabledynamictick yes >> s1ncetweaks.log
+bcdedit /set bootmenupolicy Legacy >> s1ncetweaks.log
 
 :: Quality of Life Tweaks
 echo Applying Quality of Life Tweaks...
-reg add "HKCU\Control Panel\Desktop" /v "MenuShowDelay" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKCU\Control Panel\Mouse" /v "MouseThreshold1" /t REG_SZ /d "0" /f >> S1nce.log
-reg add "HKCU\Control Panel\Mouse" /v "MouseThreshold2" /t REG_SZ /d "0" /f >> S1nce.log
-reg add "HKCU\Control Panel\Mouse" /v "MouseSpeed" /t REG_SZ /d "0" /f >> S1nce.log
-reg add "HKCU\Control Panel\Keyboard" /v "KeyboardDelay" /t REG_SZ /d "0" /f >> S1nce.log
-reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "HideFileExt" /t REG_DWORD /d 0 /f >> S1nce.log
-reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "DisallowShaking" /t REG_DWORD /d "1" /f >> S1nce.log
+reg add "HKCU\Control Panel\Desktop" /v "MenuShowDelay" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\Control Panel\Mouse" /v "MouseThreshold1" /t REG_SZ /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\Control Panel\Mouse" /v "MouseThreshold2" /t REG_SZ /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\Control Panel\Mouse" /v "MouseSpeed" /t REG_SZ /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\Control Panel\Keyboard" /v "KeyboardDelay" /t REG_SZ /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "HideFileExt" /t REG_DWORD /d 0 /f >> s1ncetweaks.log
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "DisallowShaking" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
 
 :: GPU Optimizations (Generic)
 echo Applying Generic GPU Optimizations...
-reg add "HKCU\SOFTWARE\Microsoft\DirectX\UserGpuPreferences" /v "DirectXUserGlobalSettings" /t REG_SZ /d "VRROptimizeEnable=0;" /f >> S1nce.log
-reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v "AutoGameModeEnabled" /t REG_DWORD /d "1" /f >> S1nce.log
-reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v "AllowAutoGameMode" /t REG_DWORD /d "1" /f >> S1nce.log
-reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v "ShowStartupPanel" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Microsoft\Graphics Drivers" /v "HwSchMode" /t REG_DWORD /d "2" /f >> S1nce.log
+reg add "HKCU\SOFTWARE\Microsoft\DirectX\UserGpuPreferences" /v "DirectXUserGlobalSettings" /t REG_SZ /d "VRROptimizeEnable=0;" /f >> s1ncetweaks.log
+reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v "AutoGameModeEnabled" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v "AllowAutoGameMode" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v "ShowStartupPanel" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Microsoft\Graphics Drivers" /v "HwSchMode" /t REG_DWORD /d "2" /f >> s1ncetweaks.log
 
 echo.
 echo All performance tweaks have been applied successfully!
@@ -1158,32 +1158,32 @@ echo ║       TELEMETRY AND DATA COLLECTION            ║
 echo ╚════════════════════════════════════════════════╝
 echo.
 echo Disabling Telemetry and Data Collection...
-echo [Telemetry Tweaks] >> S1nce.log
+echo [Telemetry Tweaks] >> s1ncetweaks.log
 
 :: Disable Telemetry
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v "AITEnable" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v "DisableInventory" /t REG_DWORD /d "1" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v "DisableUAR" /t REG_DWORD /d "1" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\WMI\Autologger\AutoLogger-Diagtrack-Listener" /v "Start" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Privacy" /v "TailoredExperiencesWithDiagnosticDataEnabled" /t REG_DWORD /d "0" /f >> S1nce.log
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v "AITEnable" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v "DisableInventory" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v "DisableUAR" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\WMI\Autologger\AutoLogger-Diagtrack-Listener" /v "Start" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Privacy" /v "TailoredExperiencesWithDiagnosticDataEnabled" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
 
 :: Disable additional telemetry
-reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo" /v "Enabled" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo" /v "Enabled" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKCU\SOFTWARE\Microsoft\Personalization\Settings" /v "AcceptedPrivacyPolicy" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SettingSync" /v "SyncPolicy" /t REG_DWORD /d "5" /f >> S1nce.log
-reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SettingSync\Groups\BrowserSettings" /v "Enabled" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SettingSync\Groups\Credentials" /v "Enabled" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SettingSync\Groups\Language" /v "Enabled" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SettingSync\Groups\Personalization" /v "Enabled" /t REG_DWORD /d "0" /f >> S1nce.log
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo" /v "Enabled" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo" /v "Enabled" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\SOFTWARE\Microsoft\Personalization\Settings" /v "AcceptedPrivacyPolicy" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SettingSync" /v "SyncPolicy" /t REG_DWORD /d "5" /f >> s1ncetweaks.log
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SettingSync\Groups\BrowserSettings" /v "Enabled" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SettingSync\Groups\Credentials" /v "Enabled" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SettingSync\Groups\Language" /v "Enabled" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SettingSync\Groups\Personalization" /v "Enabled" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
 
 :: Disable DiagTrack service
-sc config DiagTrack start= disabled >> S1nce.log
-sc stop DiagTrack >> S1nce.log
-sc config dmwappushservice start= disabled >> S1nce.log
-sc stop dmwappushservice >> S1nce.log
+sc config DiagTrack start= disabled >> s1ncetweaks.log
+sc stop DiagTrack >> s1ncetweaks.log
+sc config dmwappushservice start= disabled >> s1ncetweaks.log
+sc stop dmwappushservice >> s1ncetweaks.log
 
 echo.
 echo Telemetry and data collection have been disabled.
@@ -1199,16 +1199,16 @@ echo ║         WINDOWS ERROR REPORTING                ║
 echo ╚════════════════════════════════════════════════╝
 echo.
 echo Disabling Windows Error Reporting...
-echo [Error Reporting Tweaks] >> S1nce.log
+echo [Error Reporting Tweaks] >> s1ncetweaks.log
 
 :: Disable Error Reporting
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting" /v "Disabled" /t REG_DWORD /d "1" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting" /v "Disabled" /t REG_DWORD /d "1" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting\WerKernelReporting" /v "DisableKernelReporting" /t REG_DWORD /d "1" /f >> S1nce.log
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting" /v "Disabled" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting" /v "Disabled" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting\WerKernelReporting" /v "DisableKernelReporting" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
 
 :: Disable WER Service
-sc config WerSvc start= disabled >> S1nce.log
-sc stop WerSvc >> S1nce.log
+sc config WerSvc start= disabled >> s1ncetweaks.log
+sc stop WerSvc >> s1ncetweaks.log
 
 echo.
 echo Windows Error Reporting has been disabled.
@@ -1236,22 +1236,22 @@ set /p def=Enter your choice (1-4):
 
 if "%def%"=="1" (
     echo Disabling Windows Defender...
-    echo [Windows Defender - Disabled] >> S1nce.log
+    echo [Windows Defender - Disabled] >> s1ncetweaks.log
     
     :: Disable Windows Defender through registry
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" /v "DisableAntiSpyware" /t REG_DWORD /d "1" /f >> S1nce.log
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableBehaviorMonitoring" /t REG_DWORD /d "1" /f >> S1nce.log
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableOnAccessProtection" /t REG_DWORD /d "1" /f >> S1nce.log
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableScanOnRealtimeEnable" /t REG_DWORD /d "1" /f >> S1nce.log
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Reporting" /v "DisableEnhancedNotifications" /t REG_DWORD /d "1" /f >> S1nce.log
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" /v "DisableAntiSpyware" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableBehaviorMonitoring" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableOnAccessProtection" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableScanOnRealtimeEnable" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Reporting" /v "DisableEnhancedNotifications" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
     
     :: Disable services
-    sc config WinDefend start= disabled >> S1nce.log
-    sc stop WinDefend >> S1nce.log
-    sc config WdNisSvc start= disabled >> S1nce.log
-    sc stop WdNisSvc >> S1nce.log
-    sc config Sense start= disabled >> S1nce.log
-    sc stop Sense >> S1nce.log
+    sc config WinDefend start= disabled >> s1ncetweaks.log
+    sc stop WinDefend >> s1ncetweaks.log
+    sc config WdNisSvc start= disabled >> s1ncetweaks.log
+    sc stop WdNisSvc >> s1ncetweaks.log
+    sc config Sense start= disabled >> s1ncetweaks.log
+    sc stop Sense >> s1ncetweaks.log
     
     echo Windows Defender has been disabled.
     echo [WARNING] Your system is now more vulnerable to malware.
@@ -1260,21 +1260,21 @@ if "%def%"=="1" (
 
 if "%def%"=="2" (
     echo Optimizing Windows Defender...
-    echo [Windows Defender - Optimized] >> S1nce.log
+    echo [Windows Defender - Optimized] >> s1ncetweaks.log
     
     :: Optimize Windows Defender without disabling it
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableRawWriteNotification" /t REG_DWORD /d "1" /f >> S1nce.log
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Reporting" /v "DisableEnhancedNotifications" /t REG_DWORD /d "1" /f >> S1nce.log
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableArchiveScanning" /t REG_DWORD /d "1" /f >> S1nce.log
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableCatchupFullScan" /t REG_DWORD /d "1" /f >> S1nce.log
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableCatchupQuickScan" /t REG_DWORD /d "1" /f >> S1nce.log
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableEmailScanning" /t REG_DWORD /d "1" /f >> S1nce.log
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableRemovableDriveScanning" /t REG_DWORD /d "1" /f >> S1nce.log
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableHeuristics" /t REG_DWORD /d "1" /f >> S1nce.log
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableRawWriteNotification" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Reporting" /v "DisableEnhancedNotifications" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableArchiveScanning" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableCatchupFullScan" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableCatchupQuickScan" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableEmailScanning" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableRemovableDriveScanning" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableHeuristics" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
     
     :: Add exclusion for games folder
-    powershell -Command "Add-MpPreference -ExclusionPath 'C:\Program Files (x86)\Steam'" >> S1nce.log
-    powershell -Command "Add-MpPreference -ExclusionPath 'C:\Program Files\Epic Games'" >> S1nce.log
+    powershell -Command "Add-MpPreference -ExclusionPath 'C:\Program Files (x86)\Steam'" >> s1ncetweaks.log
+    powershell -Command "Add-MpPreference -ExclusionPath 'C:\Program Files\Epic Games'" >> s1ncetweaks.log
     
     echo Windows Defender has been optimized for better performance
     echo while maintaining essential protection.
@@ -1282,19 +1282,19 @@ if "%def%"=="2" (
 
 if "%def%"=="3" (
     echo Re-enabling Windows Defender...
-    echo [Windows Defender - Enabled] >> S1nce.log
+    echo [Windows Defender - Enabled] >> s1ncetweaks.log
     
     :: Re-enable Windows Defender
-    reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" /v "DisableAntiSpyware" /f >> S1nce.log 2>nul
-    reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableBehaviorMonitoring" /f >> S1nce.log 2>nul
-    reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableOnAccessProtection" /f >> S1nce.log 2>nul
-    reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableScanOnRealtimeEnable" /f >> S1nce.log 2>nul
+    reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" /v "DisableAntiSpyware" /f >> s1ncetweaks.log 2>nul
+    reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableBehaviorMonitoring" /f >> s1ncetweaks.log 2>nul
+    reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableOnAccessProtection" /f >> s1ncetweaks.log 2>nul
+    reg delete "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableScanOnRealtimeEnable" /f >> s1ncetweaks.log 2>nul
     
     :: Re-enable services
-    sc config WinDefend start= auto >> S1nce.log
-    sc start WinDefend >> S1nce.log
-    sc config WdNisSvc start= auto >> S1nce.log
-    sc start WdNisSvc >> S1nce.log
+    sc config WinDefend start= auto >> s1ncetweaks.log
+    sc start WinDefend >> s1ncetweaks.log
+    sc config WdNisSvc start= auto >> s1ncetweaks.log
+    sc start WdNisSvc >> s1ncetweaks.log
     
     echo Windows Defender has been re-enabled.
 )
@@ -1317,7 +1317,7 @@ echo ║               OO SHUTUP10                      ║
 echo ╚════════════════════════════════════════════════╝
 echo.
 echo Running OO ShutUp10 with recommended settings...
-echo [OO ShutUp10] >> S1nce.log
+echo [OO ShutUp10] >> s1ncetweaks.log
 
 start "" /wait "%s1nce%\OOSU10.exe" "%s1nce%\ooshutup10.cfg" /quiet
 
@@ -1341,37 +1341,37 @@ echo Processing...
 
 :: Telemetry and Data Collection
 echo Disabling Telemetry and Data Collection...
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v "AITEnable" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v "DisableInventory" /t REG_DWORD /d "1" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v "DisableUAR" /t REG_DWORD /d "1" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\WMI\Autologger\AutoLogger-Diagtrack-Listener" /v "Start" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Privacy" /v "TailoredExperiencesWithDiagnosticDataEnabled" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo" /v "Enabled" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo" /v "Enabled" /t REG_DWORD /d "0" /f >> S1nce.log
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v "AITEnable" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v "DisableInventory" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v "DisableUAR" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\WMI\Autologger\AutoLogger-Diagtrack-Listener" /v "Start" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Privacy" /v "TailoredExperiencesWithDiagnosticDataEnabled" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo" /v "Enabled" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo" /v "Enabled" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
 
 :: Error Reporting
 echo Disabling Windows Error Reporting...
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting" /v "Disabled" /t REG_DWORD /d "1" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting" /v "Disabled" /t REG_DWORD /d "1" /f >> S1nce.log
-sc config WerSvc start= disabled >> S1nce.log
-sc stop WerSvc >> S1nce.log
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting" /v "Disabled" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting" /v "Disabled" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+sc config WerSvc start= disabled >> s1ncetweaks.log
+sc stop WerSvc >> s1ncetweaks.log
 
 :: Defender Optimization (not disabling)
 echo Optimizing Windows Defender...
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableRawWriteNotification" /t REG_DWORD /d "1" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Reporting" /v "DisableEnhancedNotifications" /t REG_DWORD /d "1" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableArchiveScanning" /t REG_DWORD /d "1" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableCatchupFullScan" /t REG_DWORD /d "1" /f >> S1nce.log
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableCatchupQuickScan" /t REG_DWORD /d "1" /f >> S1nce.log
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" /v "DisableRawWriteNotification" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Reporting" /v "DisableEnhancedNotifications" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableArchiveScanning" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableCatchupFullScan" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" /v "DisableCatchupQuickScan" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
 
 :: Disable diagnostic services
 echo Disabling Diagnostic Services...
-sc config DiagTrack start= disabled >> S1nce.log
-sc stop DiagTrack >> S1nce.log
-sc config dmwappushservice start= disabled >> S1nce.log
-sc stop dmwappushservice >> S1nce.log
+sc config DiagTrack start= disabled >> s1ncetweaks.log
+sc stop DiagTrack >> s1ncetweaks.log
+sc config dmwappushservice start= disabled >> s1ncetweaks.log
+sc stop dmwappushservice >> s1ncetweaks.log
 
 :: Run O&O ShutUp10
 echo Running OO ShutUp10...
@@ -1412,100 +1412,100 @@ goto VisualSettings
 :PerformanceVisual
 cls
 echo Applying Performance Visual Settings...
-echo [Performance Visual Settings] >> S1nce.log
+echo [Performance Visual Settings] >> s1ncetweaks.log
 
 :: Set visual effects for performance
-reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects" /v "VisualFXSetting" /t REG_DWORD /d "2" /f >> S1nce.log
-reg add "HKCU\Control Panel\Desktop" /v "UserPreferencesMask" /t REG_BINARY /d "9012038010000000" /f >> S1nce.log
-reg add "HKCU\Control Panel\Desktop\WindowMetrics" /v "MinAnimate" /t REG_SZ /d "0" /f >> S1nce.log
-reg add "HKCU\Software\Microsoft\Windows\DWM" /v "EnableAeroPeek" /t REG_DWORD /d "0" /f >> S1nce.log
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects" /v "VisualFXSetting" /t REG_DWORD /d "2" /f >> s1ncetweaks.log
+reg add "HKCU\Control Panel\Desktop" /v "UserPreferencesMask" /t REG_BINARY /d "9012038010000000" /f >> s1ncetweaks.log
+reg add "HKCU\Control Panel\Desktop\WindowMetrics" /v "MinAnimate" /t REG_SZ /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\Software\Microsoft\Windows\DWM" /v "EnableAeroPeek" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
 
 echo Performance Visual Settings applied successfully!
-echo Operation completed at %time% on %date% >> S1nce.log
+echo Operation completed at %time% on %date% >> s1ncetweaks.log
 timeout /t 3 /nobreak >nul
 goto VisualSettings
 
 :TransparencyEffects
 cls
 echo Disabling Transparency Effects...
-echo [Transparency Effects Disabled] >> S1nce.log
+echo [Transparency Effects Disabled] >> s1ncetweaks.log
 
 :: Disable transparency
-reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" /v "EnableTransparency" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKCU\Software\Microsoft\Windows\DWM" /v "ColorPrevalence" /t REG_DWORD /d "1" /f >> S1nce.log
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" /v "EnableTransparency" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\Software\Microsoft\Windows\DWM" /v "ColorPrevalence" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
 
 echo Transparency Effects have been disabled!
-echo Operation completed at %time% on %date% >> S1nce.log
+echo Operation completed at %time% on %date% >> s1ncetweaks.log
 timeout /t 3 /nobreak >nul
 goto VisualSettings
 
 :AnimationEffects
 cls
 echo Disabling Animations and Effects...
-echo [Animations and Effects Disabled] >> S1nce.log
+echo [Animations and Effects Disabled] >> s1ncetweaks.log
 
 :: Disable animations
-reg add "HKCU\Control Panel\Desktop\WindowMetrics" /v "MinAnimate" /t REG_SZ /d "0" /f >> S1nce.log
-reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "TaskbarAnimations" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKCU\Control Panel\Desktop" /v "DragFullWindows" /t REG_SZ /d "0" /f >> S1nce.log
-reg add "HKCU\Software\Microsoft\Windows\DWM" /v "EnableAnimations" /t REG_DWORD /d "0" /f >> S1nce.log
+reg add "HKCU\Control Panel\Desktop\WindowMetrics" /v "MinAnimate" /t REG_SZ /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "TaskbarAnimations" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\Control Panel\Desktop" /v "DragFullWindows" /t REG_SZ /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\Software\Microsoft\Windows\DWM" /v "EnableAnimations" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
 
 :: Disable fading effects
-reg add "HKCU\Control Panel\Desktop" /v "MenuShowDelay" /t REG_SZ /d "0" /f >> S1nce.log
-reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "ListviewAlphaSelect" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKCU\Control Panel\Desktop" /v "FontSmoothing" /t REG_SZ /d "0" /f >> S1nce.log
+reg add "HKCU\Control Panel\Desktop" /v "MenuShowDelay" /t REG_SZ /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "ListviewAlphaSelect" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\Control Panel\Desktop" /v "FontSmoothing" /t REG_SZ /d "0" /f >> s1ncetweaks.log
 
 echo Animations and Effects have been disabled!
-echo Operation completed at %time% on %date% >> S1nce.log
+echo Operation completed at %time% on %date% >> s1ncetweaks.log
 timeout /t 3 /nobreak >nul
 goto VisualSettings
 
 :DarkMode
 cls
 echo Enabling Dark Mode...
-echo [Dark Mode Enabled] >> S1nce.log
+echo [Dark Mode Enabled] >> s1ncetweaks.log
 
 :: Enable dark mode
-reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" /v "AppsUseLightTheme" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" /v "SystemUsesLightTheme" /t REG_DWORD /d "0" /f >> S1nce.log
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" /v "AppsUseLightTheme" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" /v "SystemUsesLightTheme" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
 
 echo Dark Mode has been enabled!
-echo Operation completed at %time% on %date% >> S1nce.log
+echo Operation completed at %time% on %date% >> s1ncetweaks.log
 timeout /t 3 /nobreak >nul
 goto VisualSettings
 
 :AllVisualTweaks
 cls
 echo Applying All Visual Tweaks...
-echo [All Visual Tweaks Applied] >> S1nce.log
+echo [All Visual Tweaks Applied] >> s1ncetweaks.log
 
 :: Set visual effects for performance
-reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects" /v "VisualFXSetting" /t REG_DWORD /d "2" /f >> S1nce.log
-reg add "HKCU\Control Panel\Desktop" /v "UserPreferencesMask" /t REG_BINARY /d "9012038010000000" /f >> S1nce.log
-reg add "HKCU\Control Panel\Desktop\WindowMetrics" /v "MinAnimate" /t REG_SZ /d "0" /f >> S1nce.log
-reg add "HKCU\Software\Microsoft\Windows\DWM" /v "EnableAeroPeek" /t REG_DWORD /d "0" /f >> S1nce.log
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects" /v "VisualFXSetting" /t REG_DWORD /d "2" /f >> s1ncetweaks.log
+reg add "HKCU\Control Panel\Desktop" /v "UserPreferencesMask" /t REG_BINARY /d "9012038010000000" /f >> s1ncetweaks.log
+reg add "HKCU\Control Panel\Desktop\WindowMetrics" /v "MinAnimate" /t REG_SZ /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\Software\Microsoft\Windows\DWM" /v "EnableAeroPeek" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
 
 :: Disable transparency
-reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" /v "EnableTransparency" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKCU\Software\Microsoft\Windows\DWM" /v "ColorPrevalence" /t REG_DWORD /d "1" /f >> S1nce.log
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" /v "EnableTransparency" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\Software\Microsoft\Windows\DWM" /v "ColorPrevalence" /t REG_DWORD /d "1" /f >> s1ncetweaks.log
 
 :: Disable animations
-reg add "HKCU\Control Panel\Desktop\WindowMetrics" /v "MinAnimate" /t REG_SZ /d "0" /f >> S1nce.log
-reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "TaskbarAnimations" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKCU\Control Panel\Desktop" /v "DragFullWindows" /t REG_SZ /d "0" /f >> S1nce.log
-reg add "HKCU\Software\Microsoft\Windows\DWM" /v "EnableAnimations" /t REG_DWORD /d "0" /f >> S1nce.log
+reg add "HKCU\Control Panel\Desktop\WindowMetrics" /v "MinAnimate" /t REG_SZ /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "TaskbarAnimations" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\Control Panel\Desktop" /v "DragFullWindows" /t REG_SZ /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\Software\Microsoft\Windows\DWM" /v "EnableAnimations" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
 
 :: Disable fading effects
-reg add "HKCU\Control Panel\Desktop" /v "MenuShowDelay" /t REG_SZ /d "0" /f >> S1nce.log
-reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "ListviewAlphaSelect" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKCU\Control Panel\Desktop" /v "FontSmoothing" /t REG_SZ /d "0" /f >> S1nce.log
+reg add "HKCU\Control Panel\Desktop" /v "MenuShowDelay" /t REG_SZ /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "ListviewAlphaSelect" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\Control Panel\Desktop" /v "FontSmoothing" /t REG_SZ /d "0" /f >> s1ncetweaks.log
 
 :: Enable dark mode
-reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" /v "AppsUseLightTheme" /t REG_DWORD /d "0" /f >> S1nce.log
-reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" /v "SystemUsesLightTheme" /t REG_DWORD /d "0" /f >> S1nce.log
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" /v "AppsUseLightTheme" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" /v "SystemUsesLightTheme" /t REG_DWORD /d "0" /f >> s1ncetweaks.log
 
 echo All Visual Tweaks have been applied successfully!
-echo Operation completed at %time% on %date% >> S1nce.log
+echo Operation completed at %time% on %date% >> s1ncetweaks.log
 timeout /t 3 /nobreak >nul
 goto MainMenu
 
