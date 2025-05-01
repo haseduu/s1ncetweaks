@@ -213,7 +213,7 @@ echo [4] 32 GB RAM
 echo [5] 64 GB RAM
 echo [6] Back to Performance Menu
 echo.
-set /p ram=Enter your choice (1-7): 
+set /p ram=Enter your choice (1-6): 
 
 if "%ram%"=="1" (
     reg add "HKLM\SYSTEM\CurrentControlSet\Control" /v "SvcHostSplitThresholdInKB" /t REG_DWORD /d "4194304" /f >> s1ncetweaks.log
@@ -1008,6 +1008,8 @@ echo.
 echo All privacy tweaks have been applied successfully!
 echo.
 echo Press any key to return to Privacy Tweaks menu...
+pause >nul
+goto PrivacyTweaks
 
 :VisualSettings
 cls
