@@ -238,7 +238,7 @@ if "%ram%"=="5" (
 
 if "%ram%"=="6" goto PerformanceTweaks
 
-if "%ram%" NEQ "7" (
+if "%ram%" NEQ "6" (
     echo.
     echo Service Host optimizations applied successfully.
     echo.
