@@ -85,7 +85,7 @@ curl -L --silent -o "%s1nce%\OOSU10.exe" "https://dl5.oo-software.com/files/oosh
 echo [2/3] ooshutup10.cfg (configuration file)
 curl -L --silent -o "%s1nce%\ooshutup10.cfg" "https://raw.githubusercontent.com/haseduu/s1ncetweaks/main/resources/ooshutup10.cfg"
 echo [3/3] Khorvie.pow (powerplan for max performance)
-curl -L --silent -o "C:\Khorvie.pow" "hhttps://raw.githubusercontent.com/haseduu/s1ncetweaks/main/resources/Khorvie.pow"
+curl -L --silent -o "C:\Khorvie.pow" "https://raw.githubusercontent.com/haseduu/s1ncetweaks/main/resources/Khorvie.pow"
 echo.
 echo Download completed successfully!
 echo.
