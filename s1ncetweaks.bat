@@ -303,6 +303,10 @@ echo.
 echo Applying Power Optimization Tweaks...
 echo [Power Tweaks] >> s1ncetweaks.log
 
+:: Process Priority Control
+echo Setting Process Priority Control...
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\PriorityControl" /v "Win32PrioritySeparation" /t REG_DWORD /d "42" /f >> s1ncetweaks.log
+
 :: Import optimized power plan
 powercfg -import "C:\Khorvie.pow" 11111111-1111-1111-1111-111111111111 >> s1ncetweaks.log
 powercfg -setactive 11111111-1111-1111-1111-111111111111 >> s1ncetweaks.log
@@ -620,7 +624,7 @@ reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management
 
 :: Process Priority Control
 echo Setting Process Priority Control...
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\PriorityControl" /v "Win32PrioritySeparation" /t REG_DWORD /d "36" /f >> s1ncetweaks.log
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\PriorityControl" /v "Win32PrioritySeparation" /t REG_DWORD /d "42" /f >> s1ncetweaks.log
 
 :: System Responsiveness
 echo Setting System Responsiveness...
